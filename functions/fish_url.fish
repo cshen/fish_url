@@ -122,7 +122,7 @@ function __init
 
     cp -f $_f0  $_confd_dir/fish_url_hdl.fish
 
-    echo "Initialization completed successfully. Check "$_confd_dir/fish_url_hdl.fish
+    echo "Initialization completed successfully. Check "(realpath $_confd_dir)"/fish_url_hdl.fish"
     rm -f $_f0
     rm -f $_f
 
