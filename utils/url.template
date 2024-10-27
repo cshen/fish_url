@@ -1,0 +1,7 @@
+# DO NOT MODIFY THIS FILE, CS: 27 Oct 2024 20:12
+function __URL_FUNC__
+    set -l INPUT $argv
+    echo __CMDLINE__  INPUT
+end
+
+

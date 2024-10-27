@@ -1,0 +1,50 @@
+# ------------------------------
+# CS: 27 Oct 2024 16:27 
+# Section name needs to be unique, and starts with: (user defined keyword)_FishHDL_(FILE|URL)
+# ------------------------------
+
+# ------- FILE -----------------
+[PDF_FishHDL_FILE]
+extension = pdf|PDF
+command = pdfly.sh __INPUT__
+
+
+[IMAGE_FishHDL_FILE]
+extension = png|PNG|heic|HEIC|tiff|TIFF
+# brew install imagemagick (for other OS, apt install ...) 
+command = img_to_jpg __INPUT__
+
+
+[LaTeX_FishHDL_FILE]
+extension = tex|TEX
+command = pdflatex-quiet __INPUT__
+
+
+[DOCX_FishHDL_FILE]
+extension =  docx|DOCX
+# pipx install docx2pdf, only for macOS 
+command  = docx2pdf __INPUT__
+
+
+[Compression_FishHDL_FILE]
+extension = 7z|Z|bz2|cab|cpio|crx|gz|jar|lzma|lha|rar|tar|taz|tb2|tbz|tbz2|tgz|txz|xz|zip|zst|zst 
+# `brew install dtrx' on macOS
+command  = dtrx -v --one inside __INPUT__
+
+# ------- URL ------------------
+[Youtube_FishHDL_URL]
+url = https://www.youtube.com
+command = avdl.sh __INPUT__
+
+
+[xiaohongshu_FishHDL_URL]
+url = https://www.xiaohongshu.com
+command = avdl.sh __INPUT__
+
+
+[arxiv_FishHDL_URL]
+url = https://arxiv.org
+# rely on axs, `pipx install git+https://github.com/cshen/arxiv_download' 
+command = arxiv  __INPUT__
+
+
