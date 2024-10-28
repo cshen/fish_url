@@ -31,7 +31,7 @@ function fish_url --argument opt
     end
 
     echo "Usage: "
-    echo "    `fish_url \(init | version | env | help\)'"
+    echo "    `fish_url (init | version | env | help)'"
     
 end
 
