@@ -1,55 +1,55 @@
 # ------------------------------
 # CS: 27 Oct 2024 16:27 
-# Section name needs to be unique, and starts with: (user defined keyword)_FishHDL_(FILE|URL|Generic)
+# Section name needs to be unique, and starts with: (user defined keyword)_(FILE|URL|Generic)
 # ------------------------------
 
 # ------- FILE -----------------
-[PDF_FishHDL_FILE]
+[PDF_FILE]
 extension = pdf|PDF
 # __INPUT__ is the placeholder for the filename or URL
 command = pdfly.sh __INPUT__
 
 
-[IMAGE_FishHDL_FILE]
+[IMAGE_FILE]
 extension = png|PNG|heic|HEIC|tiff|TIFF
 # brew install imagemagick (for other OS, apt install ...) 
 command = img_to_jpg __INPUT__
 
 
-[LaTeX_FishHDL_FILE]
+[LaTeX_FILE]
 extension = tex|TEX
 command = pdflatex-quiet __INPUT__
 
 
-[DOCX_FishHDL_FILE]
+[DOCX_FILE]
 extension =  docx|DOCX
 # pipx install docx2pdf, only for macOS 
 command  = docx2pdf __INPUT__
 
 
-[Compression_FishHDL_FILE]
+[Compression_FILE]
 extension = 7z|Z|bz2|cab|cpio|crx|gz|jar|lzma|lha|rar|tar|taz|tb2|tbz|tbz2|tgz|txz|xz|zip|zst|zst 
 # `brew install dtrx' on macOS
 command  = dtrx -v --one inside __INPUT__
 
 # ------- URL ------------------
-[Youtube_FishHDL_URL]
+[Youtube_URL]
 url = https://www.youtube.com
 command = avdl.sh __INPUT__
 
 
-[xiaohongshu_FishHDL_URL]
+[xiaohongshu_URL]
 url = https://www.xiaohongshu.com
 command = avdl.sh __INPUT__
 
 
-[arxiv_FishHDL_URL]
+[arxiv_URL]
 url = https://arxiv.org
 # rely on axs, `pipx install git+https://github.com/cshen/arxiv_download' 
 command = arxiv  __INPUT__
 
 
-[Convertimages_FishHDL_Generic]
+[Convertimages_Generic]
 # Here rule is the regex to match a fish command, it will be copied to the abbr function without any modification
 rule = .*convert.*image.*
 # using tldr to show the usage of magick, as an example
