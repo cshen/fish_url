@@ -21,7 +21,7 @@ function fish_url --argument opt
     end
 
     if test "$opt" = "env"
-        set -q $fish_url_hdl_config && echo  \$fish_url_hdl_config"  "$fish_url_hdl_config || echo  \$fish_url_hdl_config is not set
+        set -q fish_url_hdl_config && echo  \$fish_url_hdl_config"  "$fish_url_hdl_config || echo  \$fish_url_hdl_config is not set
         return 0
     end
 
