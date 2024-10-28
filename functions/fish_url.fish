@@ -4,14 +4,10 @@ function fish_url --argument opt
         echo "Usage: " 
         echo "    `fish_url help' to print this message"
         echo "    `fish_url init' to generate the necessary fish function and install it to conf.d"
-        echo "    `set -Ux fish_url_hdl_config ~/.config/fish/fish_url_hdl.toml' --> the config file"
+        echo "    `set -Ux fish_url_hdl_config ~/.config/fish/fish_url_config.toml' --> the config file"
         echo 
         
-        if not test -f ~/.config/fish/fish_url_hdl.toml 
-            set -l _mydir  ( dirname (status -f) ) 
-            mkdir -p ~/.config/fish/
-            cp -iv $_mydir/config.toml ~/.config/fish/fish_url_hdl.toml 
-        end
+        __copy_config 
 
         return 0
     end
@@ -20,6 +16,7 @@ function fish_url --argument opt
         __init
     end
 end
+
 
 
 function __init 
@@ -142,3 +139,18 @@ function __subset_keys
 
     echo  $subset
 end
+
+
+function __copy_config
+
+    set -l config_dir  ~/.config/fish/   
+    set -l _mydir  ( dirname (status -f) ) 
+
+    if bash -c 'ls ~/.config/fish/fish_url*.toml  &>  /dev/null'  
+        # skip
+    else
+        mkdir -p $config_dir 
+        cp -iv $_mydir/../config.toml $config_dir/fish_url_config.toml
+    end
+end
+

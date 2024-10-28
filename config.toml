@@ -6,6 +6,7 @@
 # ------- FILE -----------------
 [PDF_FishHDL_FILE]
 extension = pdf|PDF
+# __INPUT__ is the placeholder for the filename or URL
 command = pdfly.sh __INPUT__
 
 
