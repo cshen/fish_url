@@ -41,10 +41,11 @@ function __init
 
         if not test -f $fish_url_hdl_config
             echo "$fish_url_hdl_config not found! However, \$fish_url_hdl_config is defined as:"
-            echo "    $fish_url_hdl_config" 
-            return 1
+            echo "    $fish_url_hdl_config. Fall back to the default config file"  
+            parse_simple_toml $_mydir/../config.toml > $_f
+        else
+            parse_simple_toml $fish_url_hdl_config > $_f
         end
-        parse_simple_toml $fish_url_hdl_config > $_f
     else
         if not test -f  $_mydir/../config.toml 
             echo "No config file found"
