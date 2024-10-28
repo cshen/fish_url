@@ -52,7 +52,8 @@ command = arxiv  __INPUT__
 [Convertimages_FishHDL_Generic]
 # Here rule is the regex to match a fish command, it will be copied to the abbr function without any modification
 rule = .*convert.*image.*
-# using tldr to show the usage of magick, as an example 
-command = tldr magick
+# using tldr to show the usage of magick, as an example
+# yes, I know but you do need two `echo' here ---> it will be replaced with: tldr image && echo 'try to ....' 
+command = tldr magick && echo echo you can use the command magick 
 
 
