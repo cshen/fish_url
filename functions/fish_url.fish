@@ -64,10 +64,10 @@ function __init
     # echo $full_keys
     
     # parse_simple_toml config.toml    to check the results: e.g.,
-    # ---> set   PDF_FishHDL_FILE__extension  "pdf|PDF"
-    # ---> set   PDF_FishHDL_FILE__command  "pdfly.sh __INPUT__" 
-    # ---> set   Convertimages_FishHDL_Generic__rule  ".*convert.*image.*"
-    # ---> set   Convertimages_FishHDL_Generic__command  "tldr magick"
+    # ---> set   PDF_FILE__extension  "pdf|PDF"
+    # ---> set   PDF_FILE__command  "pdfly.sh __INPUT__" 
+    # ---> set   Convertimages_Generic__rule  ".*convert.*image.*"
+    # ---> set   Convertimages_Generic__command  "tldr magick"
     #  
     # input the array as a single string
     set file_ext_keys ( __subset_keys "$full_keys" __extension )
