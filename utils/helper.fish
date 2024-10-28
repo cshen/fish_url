@@ -165,7 +165,7 @@ end
 # ports = [ 8000, 8001, 8002 ]
 # data = [ "delta" ]
 # temp_targets = { cpu = 79.5 }
-function parse_simple_toml --argument input_file --d "Parse simple TOML config into Fish source-able text"
+function __fishurl_parse_simple_toml --argument input_file --d "Parse simple TOML config into Fish source-able text"
 
     set newlines ( clean_config $input_file )
 

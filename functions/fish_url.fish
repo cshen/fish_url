@@ -1,9 +1,14 @@
 function fish_url --argument opt
+
+    set VER 0.1.0
+
     if test "$opt" = "";
         or test "$opt" = "help"
         echo "Usage: " 
+        echo "    `fish_url \(init | version | env | help\)'"
         echo "    `fish_url help' to print this message"
         echo "    `fish_url init' to generate the necessary fish function and install it to conf.d"
+        echo "    `fish_url env' to show the environment variables currently used"
         echo "    `set -gx fish_url_hdl_config ~/.config/fish/fish_url_config.toml', to define your own config file in config.fish"
         echo 
         
@@ -12,14 +17,28 @@ function fish_url --argument opt
         return 0
     end
     
-    if test "$opt" = "init"
-        __init
+    if test "$opt" = "version"
+        echo fish_url version: $VER 
+        return 0
     end
+
+    if test "$opt" = "env"
+        set -q $fish_url_hdl_config && echo  \$fish_url_hdl_config"  "$fish_url_hdl_config || echo  \$fish_url_hdl_config is not set
+        return 0
+    end
+
+    if test "$opt" = "init"
+        __fishurl_init
+       return 0
+    end
+
+    
 end
 
 
 
-function __init 
+
+function __fishurl_init 
 
     set _f0 ( mktemp /tmp/fish_hdl.XXXX )
 
@@ -42,16 +61,16 @@ function __init
         if not test -f $fish_url_hdl_config
             echo "$fish_url_hdl_config not found! However, \$fish_url_hdl_config is defined as:"
             echo "    $fish_url_hdl_config. Fall back to the default config file"  
-            parse_simple_toml $_mydir/../config.toml > $_f
+            __fishurl_parse_simple_toml $_mydir/../config.toml > $_f
         else
-            parse_simple_toml $fish_url_hdl_config > $_f
+            __fishurl_parse_simple_toml $fish_url_hdl_config > $_f
         end
     else
         if not test -f  $_mydir/../config.toml 
             echo "No config file found"
             return 1
         end
-        parse_simple_toml $_mydir/../config.toml  > $_f 
+        __fishurl_parse_simple_toml $_mydir/../config.toml  > $_f 
     end
 
 
@@ -63,7 +82,7 @@ function __init
     set full_keys ( cat $_f | awk '{print $2}' )
     # echo $full_keys
     
-    # parse_simple_toml config.toml    to check the results: e.g.,
+    # __fishurl_parse_simple_toml config.toml    to check the results: e.g.,
     # ---> set   PDF_FILE__extension  "pdf|PDF"
     # ---> set   PDF_FILE__command  "pdfly.sh __INPUT__" 
     # ---> set   Convertimages_Generic__rule  ".*convert.*image.*"
