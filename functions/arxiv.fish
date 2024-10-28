@@ -13,6 +13,7 @@ function arxiv -d "downalod arxiv papers. `axs' is needed."
 
     # using axs to download. 
     # Install:  pipx install git+https://github.com/cshen/arxiv_download   
+    echo "command: axs get -d $HOME/Downloads/_arXiv $ID"
     
     axs get -d $HOME/Downloads/_arXiv $ID 
     arxiv_bib $ID $HOME/Downloads/_arXiv/_cs_arxiv.bib
