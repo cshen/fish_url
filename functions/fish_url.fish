@@ -2,10 +2,8 @@ function fish_url --argument opt
 
     set VER 0.1.0
 
-    if test "$opt" = "";
-        or test "$opt" = "help"
-        echo "Usage: " 
-        echo "    `fish_url \(init | version | env | help\)'"
+    if test "$opt" = "help"
+        echo "Usage: "
         echo "    `fish_url help' to print this message"
         echo "    `fish_url init' to generate the necessary fish function and install it to conf.d"
         echo "    `fish_url env' to show the environment variables currently used"
@@ -32,6 +30,8 @@ function fish_url --argument opt
        return 0
     end
 
+    echo "Usage: "
+    echo "    `fish_url \(init | version | env | help\)'"
     
 end
 
