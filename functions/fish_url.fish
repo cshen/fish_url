@@ -38,6 +38,12 @@ function __init
 
     # Global variable to store the config file. If it's not defined, use the default file
     if set -q fish_url_hdl_config
+
+        if not test -f $fish_url_hdl_config
+            echo "$fish_url_hdl_config not found! However, \$fish_url_hdl_config is defined as:"
+            echo "    $fish_url_hdl_config" 
+            return 1
+        end
         parse_simple_toml $fish_url_hdl_config > $_f
     else
         if not test -f  $_mydir/../config.toml 
