@@ -185,13 +185,14 @@ end
 
 function __copy_config
 
-    set -l config_dir  ~/.config/fish/   
+    set -l config_dir  ~/.config/fish  
     set -l _mydir  ( dirname (status -f) ) 
 
     if bash -c 'ls ~/.config/fish/fish_url*.toml  &>  /dev/null'  
         # skip
     else
         mkdir -p $config_dir 
+        echo "Config file copied to your ~/.config/fish/ directory:"
         cp -iv $_mydir/../config.toml $config_dir/fish_url_config.toml
     end
 end
