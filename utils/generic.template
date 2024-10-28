@@ -1,0 +1,6 @@
+# DO NOT MODIFY THIS FILE CS: 28 Oct 2024 20:55 
+function  __GENERIC_FUNC__
+    set -l INPUT $argv
+    echo __CMDLINE__
+end
+

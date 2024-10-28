@@ -1,6 +1,6 @@
 # ------------------------------
 # CS: 27 Oct 2024 16:27 
-# Section name needs to be unique, and starts with: (user defined keyword)_FishHDL_(FILE|URL)
+# Section name needs to be unique, and starts with: (user defined keyword)_FishHDL_(FILE|URL|Generic)
 # ------------------------------
 
 # ------- FILE -----------------
@@ -47,5 +47,12 @@ command = avdl.sh __INPUT__
 url = https://arxiv.org
 # rely on axs, `pipx install git+https://github.com/cshen/arxiv_download' 
 command = arxiv  __INPUT__
+
+
+[Convertimages_FishHDL_Generic]
+# Here rule is the regex to match a fish command, it will be copied to the abbr function without any modification
+rule = .*convert.*image.*
+# using tldr to show the usage of magick, as an example 
+command = tldr magick
 
 

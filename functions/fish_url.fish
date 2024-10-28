@@ -55,14 +55,25 @@ function __init
 
     set full_keys ( cat $_f | awk '{print $2}' )
     # echo $full_keys
-
+    
+    # parse_simple_toml config.toml    to check the results: e.g.,
+    # ---> set   PDF_FishHDL_FILE__extension  "pdf|PDF"
+    # ---> set   PDF_FishHDL_FILE__command  "pdfly.sh __INPUT__" 
+    # ---> set   Convertimages_FishHDL_Generic__rule  ".*convert.*image.*"
+    # ---> set   Convertimages_FishHDL_Generic__command  "tldr magick"
+    #  
     # input the array as a single string
     set file_ext_keys ( __subset_keys "$full_keys" __extension )
     set url_keys ( __subset_keys "$full_keys" __url )
-    set file_cmd_keys ( __subset_keys "$full_keys" __FILE__command )
-    set url_cmd_keys ( __subset_keys "$full_keys" __URL_command )
+    set generic_keys ( __subset_keys "$full_keys" __rule )
 
-    #
+    # The following 3 variables are not used in the code. I just keep them for debugging CS: 28 Oct 2024 21:27 
+    set file_cmd_keys ( __subset_keys "$full_keys" _FILE__command )
+    set url_cmd_keys ( __subset_keys "$full_keys" _URL__command )
+    set generic_cmd_keys ( __subset_keys "$full_keys" _Generic__command )
+   
+    
+    # 1. ------------------------------------------------
     # File extension processing
     # $$x ---> get the value of $( $x ) where ($x) is the value of $x
     for i in ( echo $file_ext_keys | string split ' ' ) 
@@ -85,14 +96,14 @@ function __init
         # echo $i
 
         cat $_utils_dir/file_ext.template \
-            | grep -v ^\#             \
+            | grep -v ^\#                 \
             | string replace -a __CMDLINE__  "$cmd"  \
             | string replace -a __INPUT__  '$INPUT'  \
             | string replace __FILE_EXT_FUNC__  __"$i"  >> $_f0
 
     end
 
-
+    # 2. ------------------------------------------------
     set -e i x z
     # -------- https URL processing --------------------- 
     for i in ( echo $url_keys | string split ' ' ) 
@@ -110,12 +121,36 @@ function __init
         # echo $i
 
         cat $_utils_dir/url.template  \
-            | grep -v ^\#         \
+            | grep -v ^\#             \
             | string replace -a __CMDLINE__  "$cmd" \
             | string replace -a __INPUT__  '$INPUT' \
             | string replace __URL_FUNC__  __"$i"  >> $_f0
 
     end
+
+    # 3. ------------------------------------------------
+    set -e i x z
+    # -------- Generic rule processing ------------------ 
+    for i in ( echo $generic_keys | string split ' ' ) 
+        set -l x ( echo $i | awk -F__ '{print $1}' )
+        # the command will be $x__command
+        set -l z ( echo $x"__command" ) 
+        set cmd ( echo $$z )
+        
+        echo "abbr -a _$i --position command --regex"   ( echo $$i | string escape )  "--function __$i"  \
+            >> $_f0 
+
+        echo " "    >> $_f0
+        
+        cat $_utils_dir/generic.template  \
+            | grep -v ^\#                 \
+            | string replace -a __CMDLINE__  "$cmd" \
+            | string replace -a __INPUT__  '$INPUT' \
+            | string replace __GENERIC_FUNC__  __"$i"  >> $_f0
+    end
+    # end processing ------------------------------------
+    
+
 
     cp -f $_f0  $_confd_dir/fish_url_hdl.fish
 
@@ -126,7 +161,7 @@ function __init
 end
 
 
-# ------------- Private Func -----------------------------
+# ------------- Private Func ----------------------------
 
 function __subset_keys 
 

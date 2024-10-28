@@ -1,0 +1,2 @@
+CS: 28 Oct 2024 21:40 
+	Add generic rule processing. 
