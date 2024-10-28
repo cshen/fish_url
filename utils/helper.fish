@@ -183,7 +183,10 @@ function parse_simple_toml --argument input_file --d "Parse simple TOML config i
             set key ( echo $l | awk -F= '{print $1}' | string trim )
             set val ( echo $l | cut -d "=" -f2- | string trim | string unescape )
 
-            echo "set  " $s"__"$key  ' '\"$val\"  
+            # CS: 29 Oct 2024 09:48 
+            # Only for this project, I inject a special text here, to avoid potential name collision
+            # echo "set  " $s"__"$key  ' '\"$val\"  
+            echo "set  " $s"_CSFISHURL__"$key  ' '\"$val\"  
 
         end
     end
