@@ -56,25 +56,27 @@ function __fishurl_init
     cat $_utils_dir/header.template >> $_f0  
 
     # Global variable to store the config file. If it's not defined, use the default file
+    # Parse the config file
     if set -q fish_url_hdl_config
 
         if not test -f $fish_url_hdl_config
             echo "$fish_url_hdl_config not found! However, \$fish_url_hdl_config is defined as:"
             echo "    $fish_url_hdl_config. Fall back to the default config file"  
-            __fishurl_parse_simple_toml $_mydir/../config.toml > $_f
+            __fishurl_parse_simple_toml $_mydir/../config.toml > $_f || return 1
         else
-            __fishurl_parse_simple_toml $fish_url_hdl_config > $_f
+            __fishurl_parse_simple_toml $fish_url_hdl_config > $_f   || return 1
         end
     else
         if not test -f  $_mydir/../config.toml 
             echo "No config file found"
             return 1
         end
-        __fishurl_parse_simple_toml $_mydir/../config.toml  > $_f 
+        __fishurl_parse_simple_toml $_mydir/../config.toml  > $_f || return 1
     end
 
-
     source $_f
+
+
 
     set keys ( cat $_f | awk '{print $2}' | awk -F_ '{print $1}' | uniq )
     # echo $keys

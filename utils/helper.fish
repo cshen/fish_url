@@ -167,6 +167,12 @@ end
 # temp_targets = { cpu = 79.5 }
 function __fishurl_parse_simple_toml --argument input_file --d "Parse simple TOML config into Fish source-able text"
 
+
+    if not test -f $input_file 
+        echo "$input_file not found" 
+        return 1
+    end
+
     set newlines ( clean_config $input_file )
 
     # extract sections in [xxxx]
