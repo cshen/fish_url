@@ -4,7 +4,7 @@ function fish_url --argument opt
         echo "Usage: " 
         echo "    `fish_url help' to print this message"
         echo "    `fish_url init' to generate the necessary fish function and install it to conf.d"
-        echo "    `set -Ux fish_url_hdl_config ~/.config/fish/fish_url_config.toml' --> the config file"
+        echo "    `set -gx fish_url_hdl_config ~/.config/fish/fish_url_config.toml' --> define your own config file config.fish"
         echo 
         
         __copy_config 
