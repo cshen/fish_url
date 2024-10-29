@@ -1,6 +1,6 @@
 function fish_url --argument opt
 
-    set VER 0.1.0
+    set VER 0.1.1
 
     if test "$opt" = "help"
         echo "Usage: "

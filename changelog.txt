@@ -1,2 +1,5 @@
 CS: 28 Oct 2024 21:40 
-	Add generic rule processing. 
+	Added generic rule processing. 
+
+CS: 29 Oct 2024 10:37
+	Merged all functions into one single file
