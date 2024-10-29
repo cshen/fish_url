@@ -48,10 +48,10 @@ function __fishurl_init
     set _utils_dir  $_mydir"/../utils"
     set _confd_dir  $_mydir"/../conf.d"
   
+    # Not needed anymore
     # load necessary helper functions 
-    source $_utils_dir/helper.fish
+    # source $_utils_dir/helper.fish
 
-    
     echo "# "(date)                  > $_f0
     cat $_utils_dir/header.template >> $_f0  
 
@@ -189,6 +189,9 @@ function __fishurl_init
 end
 
 
+
+
+
 # ------------- Private Func ----------------------------
 
 function __subset_keys 
@@ -216,5 +219,64 @@ function __copy_config
         echo "Config file copied to your ~/.config/fish/ directory:"
         cp -iv $_mydir/../config.toml $config_dir/fish_url_config.toml
     end
+end
+
+
+function __fishurl_parse_simple_toml --argument input_file --d "Parse simple TOML config into Fish source-able text"
+
+
+    if not test -f $input_file 
+        echo "$input_file not found" 
+        return 1
+    end
+
+    set newlines ( __clean_config $input_file )
+
+    # extract sections in [xxxx]
+    for s in ( printf %s\n $newlines | grep  '^\['  )
+        set -a sections ( echo $s | awk -F\[ '{print $2}' | awk -F\] '{print $1}' )
+    end
+
+    for l in $newlines
+        if echo $l | string match -q "[*]"  
+            set s ( echo $l | awk -F\[ '{print $2}' | awk -F\] '{print $1}' ) 
+            #    echo $s
+        else
+
+            set key ( echo $l | awk -F= '{print $1}' | string trim )
+            set val ( echo $l | cut -d "=" -f2- | string trim | string unescape )
+
+            # CS: 29 Oct 2024 09:48 
+            # Only for this project, I inject a special text here, to avoid potential name collision
+            # echo "set  " $s"__"$key  ' '\"$val\"  
+            echo "set  " $s"_CSFISHURL__"$key  ' '\"$val\"  
+
+        end
+    end
+end
+
+
+
+function __clean_config --argument filename -d "Clean up a config file by removing blank lines and comments. For now, comments starts with #"
+
+    set lines (cat $filename)
+    for line in $lines
+        set -l x ( string trim $line  )
+
+        set -l first $( echo $x | string sub -s 1 -e 1 )
+
+        # remove blank and comments
+        if  test "$x" = ""
+            or  test "$first" = '#' 
+            # pass 
+        else 
+            set -a newlines ( echo  $x | awk -F\# '{ print $1}'  )    # remove comments
+        end
+    end
+
+    # fish is not able to return a list/array directory
+    # We need to pack the array into one string, with \n as the delimit
+    printf %s\n $newlines  | string join -- \n
+
 end
 
