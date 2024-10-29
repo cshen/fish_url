@@ -38,11 +38,6 @@ url = https://www.youtube.com
 command = avdl.sh __INPUT__
 
 
-[xiaohongshu_URL]
-url = https://www.xiaohongshu.com
-command = avdl.sh __INPUT__
-
-
 [arxiv_URL]
 url = https://arxiv.org
 # rely on axs, `pipx install git+https://github.com/cshen/arxiv_download' 
