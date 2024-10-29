@@ -1,6 +1,9 @@
 # fish_url
 Fish plugin to process URLs/files according to a set of rules
 
+
+### Check the demo here: https://asciinema.org/a/eMxChWba0nCeIDwLINYbgWfUC
+
 ## Install
 
 With [Fundle](https://github.com/danhper/fundle)
