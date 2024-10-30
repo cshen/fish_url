@@ -12,9 +12,10 @@ function fix_file_not_run --on-event fish_postexec
 
         # tell if it's a text file
         if file  $cmdline   | grep -i -q 'ascii text'
-            echo it apperas to be a text file, and edit it using gvim
-       
-            gvim  $cmdline
+            echo it apperas to be a text file, and edit it 
+            
+            set -q EDITOR && $EDITOR $cmdline || gvim  $cmdline
+            
         else
             echo it appears to be a file, and try to open it
           
