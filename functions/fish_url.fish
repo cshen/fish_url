@@ -23,6 +23,7 @@ function fish_url --argument opt
 
     if test "$opt" = "env"
         set -q fish_url_hdl_config && echo  \$fish_url_hdl_config"  "$fish_url_hdl_config || echo  \$fish_url_hdl_config is not set
+        status features | grep -i qmark-noglob          
         return 0
     end
 
