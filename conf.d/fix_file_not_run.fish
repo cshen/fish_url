@@ -19,7 +19,9 @@ function fix_file_not_run --on-event fish_postexec
         else
             echo it appears to be a file, and try to open it
           
-            open  $cmdline 
+            test -x /usr/bin/open && /usr/bin/open $cmdline 
+        
         end
     end
 end
+
