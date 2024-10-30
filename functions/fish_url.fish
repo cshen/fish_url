@@ -5,7 +5,8 @@ function fish_url --argument opt
     if test "$opt" = "help"
         echo "Usage: "
         echo "    `fish_url help' to print this message"
-        echo "    `fish_url init' to generate the necessary fish function and install it to conf.d"
+        echo "    `fish_url init (-f)' to generate the necessary fish abbr function and install it to conf.d"
+        echo "                    with -f, the abbr func is always re-generated. without -f, if the file already exisits, it will do nothing. "
         echo "    `fish_url env' to show the environment variables currently used"
         echo "    `set -gx fish_url_hdl_config ~/.config/fish/fish_url_config.toml', to define your own config file in config.fish"
         echo 
@@ -26,7 +27,7 @@ function fish_url --argument opt
     end
 
     if test "$opt" = "init"
-        __fishurl_init
+        __fishurl_init  "$argv[2]"
        return 0
     end
 
@@ -38,16 +39,24 @@ end
 
 
 
-function __fishurl_init 
+function __fishurl_init --argument force
 
-    set _f0 ( mktemp /tmp/fish_hdl.XXXX )
 
-    set _f ( mktemp /tmp/fish_hdl.XXXX )
     set _mydir  ( dirname (status -f) ) 
-
     set _utils_dir  $_mydir"/../utils"
     set _confd_dir  $_mydir"/../conf.d"
   
+    # if it's not forced to init, and the abbr file is already there, abort
+    if not test "$force" = "-f";
+        and test -f  $_confd_dir/fish_url_hdl.fish
+        return 0
+    end
+
+
+    set _f0 ( mktemp /tmp/fish_hdl.XXXX )
+    set _f ( mktemp /tmp/fish_hdl.XXXX )
+
+
     # Not needed anymore
     # load necessary helper functions 
     # source $_utils_dir/helper.fish
@@ -186,6 +195,7 @@ function __fishurl_init
     rm -f $_f0
     rm -f $_f
 
+    return 0
 end
 
 
