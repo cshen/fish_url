@@ -192,6 +192,12 @@ function __fishurl_init --argument force
 
     cp -f $_f0  $_confd_dir/fish_url_hdl.fish
 
+    # reload ...
+    for ff in $_confd_dir/*.fish
+        source $ff
+    end
+    
+    
     echo "Initialization completed successfully. Check "(realpath $_confd_dir)"/fish_url_hdl.fish"
     rm -f $_f0
     rm -f $_f
