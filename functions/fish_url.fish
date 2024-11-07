@@ -54,8 +54,15 @@ function __fishurl_init --argument force
     end
 
 
-    set _f0 ( mktemp /tmp/fish_hdl.XXXX )
-    set _f ( mktemp /tmp/fish_hdl.XXXX )
+    if uname -a | grep -i -q Android
+        # CS:  7 Nov 2024 14:28, on my Pixel phone, no access to /tmp
+        mkdir -p ~/tmp
+        set _f0 ( mktemp ~/tmp/fish_hdl.XXXX )
+        set _f ( mktemp ~/tmp/fish_hdl.XXXX )
+    else
+        set _f0 ( mktemp /tmp/fish_hdl.XXXX )
+        set _f ( mktemp /tmp/fish_hdl.XXXX )
+    end
 
 
     # Not needed anymore
