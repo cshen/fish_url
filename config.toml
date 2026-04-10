@@ -35,8 +35,8 @@ command  = dtrx -v --one inside __INPUT__
 # ------- URL ------------------
 [Youtube_URL]
 url = https://www.youtube.com
-command = avdl.sh __INPUT__
-
+# command = avdl.sh __INPUT__
+command = gemini --yolo -p \"Donwload this youtube-video: __INPUT__, using the skill ~/.agents/skills/youtube_download; where applicable, download the one of 1080P resolution\"
 
 [arxiv_URL]
 url = https://arxiv.org
